@@ -13,6 +13,7 @@ export class ViewStudentsComponent implements OnInit {
 
   students: Student[];
   selectedCategory: Category;
+  filterByName: string;
   categories = Category;
   
   constructor(private studentService: StudentService) {
@@ -21,6 +22,7 @@ export class ViewStudentsComponent implements OnInit {
 
   ngOnInit() {
     this.selectedCategory = Category.All;
+    this.filterByName = '';
   }
 
 }
