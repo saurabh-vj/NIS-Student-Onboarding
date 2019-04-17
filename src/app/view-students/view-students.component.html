@@ -1,3 +1,12 @@
-<p>
-  view-students works!
-</p>
+<div>
+  Select Category: 
+  <select [(ngModel)]="selectedCategory" id="category" class="form-control">
+    <option [value]="categories.All">All</option>
+    <option [value]="categories.Domestic">Domestic</option>
+    <option [value]="categories.International">International</option>
+  </select>
+  <input type="text" [(ngModel)]="filterByName" placeholder="Filter by name" class="form-control">
+  <div *ngFor="let student of (students | categoryFilter: selectedCategory | nameFilter : filterByName)">
+    <student-card [student]="student"></student-card>
+  </div>
+</div>

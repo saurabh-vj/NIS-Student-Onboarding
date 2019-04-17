@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { StudentService } from '../common/services/student.service';
+import { Student } from '../common/entities/student';
+import { FormControl, FormGroup } from "@angular/forms";
+import { Category } from '../common/enums/category.enum';
 
 @Component({
   selector: 'app-view-students',
@@ -7,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewStudentsComponent implements OnInit {
 
-  constructor() { }
+  students: Student[];
+  selectedCategory: Category;
+  categories = Category;
+  
+  constructor(private studentService: StudentService) {
+    studentService.students$.subscribe(data => this.students = data);
+  }
 
   ngOnInit() {
+    this.selectedCategory = Category.All;
   }
 
 }

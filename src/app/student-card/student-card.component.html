@@ -1,0 +1,17 @@
+<div class="card border-warning mb-3" style="max-width: 30rem;">
+  <div class="card-header">
+    <h5>{{student.studentName}}</h5>
+  </div>
+  <div class="card-body">
+    <p class="card-text"><span class="col-sm-2">Category:</span><span class="col-sm-3">{{student.category}}</span></p>
+    <p class="card-text"><span class="col-sm-2">Date of Birth:</span><span class="col-sm-3">{{student.dateOfBirth | date}}</span></p>
+    <p class="card-text"><span class="col-sm-2">Father's Name:</span><span class="col-sm-3">{{student.fatherName}}</span></p>
+    <p class="card-text"><span class="col-sm-2">Mother's Name:</span><span class="col-sm-3">{{student.motherName}}</span></p>
+    <p class="card-text"><span class="col-sm-2">Last Class Score:</span><span class="col-sm-3">{{student.lastClassScore}}%</span></p>
+  </div>
+  <div class="card-footer">
+    <a routerLink="/student" class="btn btn-primary">Edit</a>
+    <a routerLink="/student" class="btn btn-secondary">View</a>
+    <button type="button" class="btn btn-danger">Delete</button>
+  </div>
+</div>
