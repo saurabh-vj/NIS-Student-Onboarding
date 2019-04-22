@@ -28,7 +28,8 @@ export class StudentEntryComponent implements OnInit {
     private fb: FormBuilder,
     public studentService: StudentService,
     public documentService: DocumentService,
-    private route: ActivatedRoute, private router: Router) {
+    private route: ActivatedRoute,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -119,13 +120,18 @@ export class StudentEntryComponent implements OnInit {
   }
 
   onSubmit() {
-    const student = this.onboardingForm.value as Student;
-    if (this.student) {
-      student.id = this.student.id;
-      this.studentService.updateStudent(student);
-      this.router.navigate(['/view']);
-    } else {
-      this.studentService.addStudent(student);
+    if (this.onboardingForm.valid) {
+      const student = this.onboardingForm.value as Student;
+      if (this.student) {
+        student.id = this.student.id;
+        this.studentService.updateStudent(student);
+        this.router.navigate(['/view']);
+      } else {
+        this.studentService.addStudent(student);
+        this.onboardingForm.reset();
+        this.onboardingForm.get('category').setValue(Category.Domestic);
+        alert(`Student ${student.studentName} has been added successfully.`);
+      }
     }
   }
 }

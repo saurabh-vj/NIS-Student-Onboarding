@@ -6,6 +6,10 @@ import { ViewStudentsComponent } from "./view-students/view-students.component";
 
 const routes: Routes = [
   {
+    path: '',
+    component: LoginComponent
+  },
+  {
     path: 'login',
     component: LoginComponent
   },

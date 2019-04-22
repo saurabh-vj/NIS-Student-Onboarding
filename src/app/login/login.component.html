@@ -1,9 +1,10 @@
 <div class="form-signin">
   <h2 class="h3 mb-3 font-weight-normal">Please sign in</h2>
-  <form>
-    <input type="text" id="inputEmail" class="form-control vertical-gutter-20" placeholder="User name" required
-      autofocus>
-    <input type="password" id="inputPassword" class="form-control vertical-gutter-20" placeholder="Password" required>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <input type="text" id="inputEmail" class="form-control vertical-gutter-20" placeholder="User name*" autofocus
+      formControlName="userName">
+    <input type="password" id="inputPassword" class="form-control vertical-gutter-20" placeholder="Password*" autofocus
+      formControlName="password">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="loginForm.invalid">Sign in</button>
   </form>
 </div>

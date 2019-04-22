@@ -1,20 +1,26 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-  <a class="navbar-brand" routerLink="/student">Student Onboarding</a>
+  <label class="navbar-brand">Student Onboarding</label>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
+      <li [hidden]="!userName" class="nav-item">
         <a class="nav-link" routerLink="/student">Onboarding Form</a>
       </li>
-      <li class="nav-item">
+      <li [hidden]="!userName" class="nav-item">
         <a class="nav-link" routerLink="/view">View Students</a>
       </li>
     </ul>
     <ul class="navbar-nav pull-right">
-      <li class="nav-item">
+      <li [hidden]="!userName" class="nav-item">
+        <label class="nav-link">Welcome, {{userName}}.</label>
+      </li>
+      <li [hidden]="!userName" class="nav-item">
+        <a class="nav-link" routerLink="/login" (click)="logout()">Sign Out</a>
+      </li>
+      <li [hidden]="userName" class="nav-item">
         <a class="nav-link" routerLink="/login">Sign In</a>
       </li>
     </ul>
