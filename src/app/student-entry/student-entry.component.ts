@@ -5,6 +5,7 @@ import { Student } from '../common/entities/student';
 import { Documents } from '../common/enums/documents.enum';
 import { DocumentService } from '../common/services/document.service';
 import { Category } from '../common/enums/category.enum';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'student-entry',
@@ -12,37 +13,61 @@ import { Category } from '../common/enums/category.enum';
   styleUrls: ['./student-entry.component.scss']
 })
 export class StudentEntryComponent implements OnInit {
-  @Input() disableControls: boolean;
-  @Input() student: Student;
+  disableControls: boolean = false;
+  student: Student;
 
   documentList = Documents;
   categories = Category;
   mandatoryDocuments: any;
 
   onboardingForm: FormGroup;
+  sub: any;
+  studentId: number = 0;
 
-  constructor(private fb: FormBuilder, public studentService: StudentService, public documentService: DocumentService) { }
+  constructor(
+    private fb: FormBuilder,
+    public studentService: StudentService,
+    public documentService: DocumentService,
+    private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit() {
-    this.mandatoryDocuments = this.documentService.getMandatoryDocuments(Category.Domestic);
+    this.sub = this.route
+      .queryParams
+      .subscribe(params => {
+        this.studentId = +params['id'];
+        this.disableControls = !(/true/i).test(params['edit']);
+      });
+
+    if (this.studentId > 0) {
+      this.student = this.studentService.getStudentById(this.studentId);
+    } else {
+      this.disableControls = false;
+    }
+
 
     this.onboardingForm = this.fb.group({
-      studentName: ['', Validators.required],
-      category: [Category.Domestic],
+      studentName: [{ value: '', disabled: this.disableControls }, Validators.required],
+      category: [{ value: Category.Domestic, disabled: this.disableControls }],
       documents: this.fb.group({
-        domicileCertificate: [false],
-        birthCertificate: [false],
-        previousMarksheets: [false],
-        policeClearance: [false],
-        passport: [false],
-        signedDeclaration: [false],
+        domicileCertificate: [{ value: false, disabled: this.disableControls }],
+        birthCertificate: [{ value: false, disabled: this.disableControls }],
+        previousMarksheets: [{ value: false, disabled: this.disableControls }],
+        policeClearance: [{ value: false, disabled: this.disableControls }],
+        passport: [{ value: false, disabled: this.disableControls }],
+        signedDeclaration: [{ value: false, disabled: this.disableControls }],
       }),
-      dateOfBirth: ['', Validators.required],
-      fatherName: ['', Validators.required],
-      motherName: ['', Validators.required],
-      lastClassScore: ['', Validators.required],
+      dateOfBirth: [{ value: '', disabled: this.disableControls }, Validators.required],
+      fatherName: [{ value: '', disabled: this.disableControls }, Validators.required],
+      motherName: [{ value: '', disabled: this.disableControls }, Validators.required],
+      lastClassScore: [{ value: '', disabled: this.disableControls }, Validators.required],
     });
 
+    if (this.student) {
+      this.onboardingForm.patchValue(this.student);
+    }
+
+    this.mandatoryDocuments = this.documentService.getMandatoryDocuments(this.student ? this.student.category : Category.Domestic);
     this.setDocumentValidations();
     this.formControlValueChanged();
   }
@@ -67,7 +92,7 @@ export class StudentEntryComponent implements OnInit {
     if (this.mandatoryDocuments[Documents.BirthCertificate]) {
       birthCertificate.setValidators([Validators.requiredTrue]);
     }
-    
+
     const previousMarksheets = this.onboardingForm.get('documents').get('previousMarksheets');
     previousMarksheets.clearValidators();
     if (this.mandatoryDocuments[Documents.PreviousMarksheets]) {
@@ -95,6 +120,12 @@ export class StudentEntryComponent implements OnInit {
 
   onSubmit() {
     const student = this.onboardingForm.value as Student;
-    this.studentService.addStudent(student);
+    if (this.student) {
+      student.id = this.student.id;
+      this.studentService.updateStudent(student);
+      this.router.navigate(['/view']);
+    } else {
+      this.studentService.addStudent(student);
+    }
   }
 }

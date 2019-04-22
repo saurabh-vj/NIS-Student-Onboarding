@@ -1,17 +1,23 @@
-<div class="card border-warning mb-3" style="max-width: 30rem;">
+<div class="card mb-3" [ngClass]="{'border-warning': student.category == 1, 'border-info': student.category == 2}"
+  style="max-width: 30rem; border: 2px solid">
   <div class="card-header">
     <h5>{{student.studentName}}</h5>
   </div>
   <div class="card-body">
-    <p class="card-text row"><span class="col-sm-4">Category:</span><span class="col-sm-8">{{student.category}}</span></p>
-    <p class="card-text row"><span class="col-sm-4">Date of Birth:</span><span class="col-sm-8">{{student.dateOfBirth | date}}</span></p>
-    <p class="card-text row"><span class="col-sm-4">Father's Name:</span><span class="col-sm-8">{{student.fatherName}}</span></p>
-    <p class="card-text row"><span class="col-sm-4">Mother's Name:</span><span class="col-sm-8">{{student.motherName}}</span></p>
-    <p class="card-text row"><span class="col-sm-4">Last Class Score:</span><span class="col-sm-8">{{student.lastClassScore}}%</span></p>
+    <p class="card-text row"><span class="col-sm-5">Category:</span><span
+        class="col-sm-7">{{student.category == 1 ? 'Domestic' : 'International'}}</span></p>
+    <p class="card-text row"><span class="col-sm-5">Date of Birth:</span><span
+        class="col-sm-7">{{student.dateOfBirth | date}}</span></p>
+    <p class="card-text row"><span class="col-sm-5">Father's Name:</span><span
+        class="col-sm-7">{{student.fatherName}}</span></p>
+    <p class="card-text row"><span class="col-sm-5">Mother's Name:</span><span
+        class="col-sm-7">{{student.motherName}}</span></p>
+    <p class="card-text row"><span class="col-sm-5">Last Class Score:</span><span
+        class="col-sm-7">{{student.lastClassScore}}%</span></p>
   </div>
   <div class="card-footer">
-    <a routerLink="/student" class="btn btn-primary">Edit</a>
-    <a routerLink="/student" class="btn btn-secondary">View</a>
-    <button type="button" class="btn btn-danger">Delete</button>
+    <a routerLink="/student" [queryParams]="{ id: student.id, edit: true }" class="btn btn-primary">Edit</a>
+    <a routerLink="/student" [queryParams]="{ id: student.id, edit: false }" class="btn btn-secondary">View</a>
+    <button type="button" (click)="deleteStudent(student)" class="btn btn-danger">Delete</button>
   </div>
 </div>

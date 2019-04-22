@@ -11,7 +11,9 @@
       <input type="text" [(ngModel)]="filterByName" placeholder="Filter by name" class="form-control">
     </div>
   </div>
-  <div *ngFor="let student of (students | categoryFilter: selectedCategory | nameFilter : filterByName)">
-    <student-card [student]="student"></student-card>
+  <div class="card-columns">
+    <div *ngFor="let student of (students | categoryFilter: selectedCategory | nameFilter : filterByName)">
+      <student-card [student]="student"></student-card>
+    </div>
   </div>
 </div>
