@@ -1,11 +1,16 @@
-<div>
-  Select Category: 
-  <select [(ngModel)]="selectedCategory" id="category" class="form-control">
-    <option [value]="categories.All">All</option>
-    <option [value]="categories.Domestic">Domestic</option>
-    <option [value]="categories.International">International</option>
-  </select>
-  <input type="text" [(ngModel)]="filterByName" placeholder="Filter by name" class="form-control">
+<div class="view-container">
+  <div class="row filter-row">
+    <div class="col-sm-3">
+      <select [(ngModel)]="selectedCategory" id="category" class="form-control">
+        <option [value]="categories.All">All</option>
+        <option [value]="categories.Domestic">Domestic</option>
+        <option [value]="categories.International">International</option>
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <input type="text" [(ngModel)]="filterByName" placeholder="Filter by name" class="form-control">
+    </div>
+  </div>
   <div *ngFor="let student of (students | categoryFilter: selectedCategory | nameFilter : filterByName)">
     <student-card [student]="student"></student-card>
   </div>

@@ -8,7 +8,7 @@ export class NameFilterPipe implements PipeTransform {
 
   transform(students: Student[], text: string): Student[] {
     if (text) {
-      return students.filter(s => s.studentName.includes(text));
+      return students.filter(s => s.studentName.toLowerCase().includes(text.toLowerCase()));
     }
 
     return students;

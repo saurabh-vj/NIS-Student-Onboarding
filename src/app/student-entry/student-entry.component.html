@@ -1,17 +1,17 @@
 <form [formGroup]="onboardingForm" (ngSubmit)="onSubmit()" class="student-form">
   <h3 class="center-text-align vertical-gutter-30">Student Onboarding Form</h3>
   <div class="form-group row">
-    <label for="studentName" class="col-sm-4 col-form-label">Student Name</label>
+    <label for="studentName" class="col-sm-4 col-form-label">Student Name<span class="font-red">*</span></label>
     <div class="col-sm-8">
       <input type="text" formControlName="studentName" class="form-control" id="studentName" required>
     </div>
   </div>
   <div class="form-group row">
-    <label for="category" class="col-sm-4 col-form-label">Category</label>
+    <label for="category" class="col-sm-4 col-form-label">Category<span class="font-red">*</span></label>
     <div class="col-sm-8">
       <select name="category" formControlName="category" id="category" class="form-control">
-        <option value="1">Domestic</option>
-        <option value="2">International</option>
+        <option [value]="categories.Domestic">Domestic</option>
+        <option [value]="categories.International">International</option>
       </select>
     </div>
   </div>
@@ -19,33 +19,70 @@
     <div class="col-sm-4">Documents</div>
     <div class="col-sm-8">
       <div class="form-check">
-        <input class="form-check-input" formControlName="domicileCertificate" type="checkbox" id="gridCheck1">
-        <label class="form-check-label" for="gridCheck1">
+        <input class="form-check-input" formControlName="domicileCertificate" type="checkbox" id="domicileCertificate">
+        <label class="form-check-label" for="domicileCertificate">
           Domicile Certificate
         </label>
+        <span class="form-check-label font-red"
+          [hidden]="!mandatoryDocuments[documentList.DomicileCertificate]">*</span>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" formControlName="birthCertificate" type="checkbox" id="birthCertificate">
+        <label class="form-check-label" for="birthCertificate">
+          Birth Certificate
+        </label>
+        <span class="form-check-label font-red" [hidden]="!mandatoryDocuments[documentList.BirthCertificate]">*</span>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" formControlName="previousMarksheets" type="checkbox" id="previousMarksheets">
+        <label class="form-check-label" for="previousMarksheets">
+          Previous Marksheets
+        </label>
+        <span class="form-check-label font-red" [hidden]="!mandatoryDocuments[documentList.PreviousMarksheets]">*</span>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" formControlName="policeClearance" type="checkbox" id="policeClearance">
+        <label class="form-check-label" for="policeClearance">
+          Police Clearance
+        </label>
+        <span class="form-check-label font-red" [hidden]="!mandatoryDocuments[documentList.PoliceClearance]">*</span>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" formControlName="passport" type="checkbox" id="passport">
+        <label class="form-check-label" for="passport">
+          Passport
+        </label>
+        <span class="form-check-label font-red" [hidden]="!mandatoryDocuments[documentList.Passport]">*</span>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" formControlName="signedDeclaration" type="checkbox" id="signedDeclaration">
+        <label class="form-check-label" for="signedDeclaration">
+          Signed Declaration
+        </label>
+        <span class="form-check-label font-red" [hidden]="!mandatoryDocuments[documentList.SignedDeclaration]">*</span>
       </div>
     </div>
   </div>
   <div class="form-group row">
-    <label for="dob" class="col-sm-4 col-form-label">Date of Birth</label>
+    <label for="dob" class="col-sm-4 col-form-label">Date of Birth<span class="font-red">*</span></label>
     <div class="col-sm-8">
       <input type="date" formControlName="dateOfBirth" class="form-control" id="dob">
     </div>
   </div>
   <div class="form-group row">
-    <label for="fatherName" class="col-sm-4 col-form-label">Father's Name</label>
+    <label for="fatherName" class="col-sm-4 col-form-label">Father's Name<span class="font-red">*</span></label>
     <div class="col-sm-8">
       <input type="text" formControlName="fatherName" class="form-control" id="fatherName">
     </div>
   </div>
   <div class="form-group row">
-    <label for="motherName" class="col-sm-4 col-form-label">Mother's Name</label>
+    <label for="motherName" class="col-sm-4 col-form-label">Mother's Name<span class="font-red">*</span></label>
     <div class="col-sm-8">
       <input type="text" formControlName="motherName" class="form-control" id="motherName">
     </div>
   </div>
   <div class="form-group row">
-    <label for="score" class="col-sm-4 col-form-label">Last class score</label>
+    <label for="score" class="col-sm-4 col-form-label">Last class score<span class="font-red">*</span></label>
     <div class="col-sm-8">
       <input type="number" formControlName="lastClassScore" class="form-control" id="score">
     </div>
@@ -57,6 +94,4 @@
   </div>
 </form>
 
-{{onboardingForm.value | json}}
-
-{{onboardingForm.status}}
+{{onboardingForm.get('documents').valid}}

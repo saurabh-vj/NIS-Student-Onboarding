@@ -23,6 +23,7 @@ export class ViewStudentsComponent implements OnInit {
   ngOnInit() {
     this.selectedCategory = Category.All;
     this.filterByName = '';
+    this.studentService.getStudents();
   }
 
 }

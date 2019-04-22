@@ -9,15 +9,23 @@ export class StudentService {
 
   students$: BehaviorSubject<Student[]> = new BehaviorSubject([]);
 
-  constructor() { 
-    console.log('Service');
+  constructor() {
   }
 
   addStudent(student: Student) {
-    const currentData = this.students$.getValue();
-    const updatedData = [...currentData, student];
+    const currentData = JSON.parse(localStorage.getItem('students'));
+    let updatedData: Student[];
+    if (currentData != null) {
+      updatedData = [...currentData, student];
+    } else {
+      updatedData = [student];
+    }
 
-    console.log(updatedData);
+    localStorage.setItem('students', JSON.stringify(updatedData));
     this.students$.next(updatedData);
-  }  
+  }
+
+  getStudents() {
+    this.students$.next(JSON.parse(localStorage.getItem('students')));
+  }
 }
